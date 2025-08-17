@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>React Native Emulator - ArjunJr05</title>
+    <title>Arjun D - AI Developer & Software Engineer</title>
     <style>
         * {
             margin: 0;
@@ -11,665 +11,1283 @@
             box-sizing: border-box;
         }
 
+        /* --- THEME COLORS --- */
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-main-content: rgba(255, 255, 255, 0.95);
+            --bg-card: rgba(255, 255, 255, 0.8);
+            --bg-stat-item: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            --bg-contact: linear-gradient(135deg, #0a0a0a 0%, #667eea 100%);
+            --bg-nav-scrolled: rgba(10, 10, 10, 0.95);
+
+            --text-primary: #333;
+            --text-on-dark: white;
+            --text-on-dark-secondary: rgba(255, 255, 255, 0.8);
+            --text-label: #666;
+            --subtitle-gradient: linear-gradient(45deg, #ffffff, #cccccc);
+            
+            --accent-gradient: linear-gradient(45deg, #667eea, #764ba2);
+            --accent-color: #667eea;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --card-border-color: rgba(255, 255, 255, 0.2);
+            --shadow-color-main: rgba(0, 0, 0, 0.3);
+            --shadow-color-accent: rgba(102, 126, 234, 0.4);
+
+            --transition-speed: 0.3s;
+        }
+
+        body.light-theme {
+            --bg-primary: #f0f2f5;
+            --bg-main-content: #ffffff;
+            --bg-card: #fdfdfd;
+            --bg-stat-item: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            --bg-contact: linear-gradient(135deg, #e9eefc 0%, #d8cde8 100%);
+            --bg-nav-scrolled: rgba(255, 255, 255, 0.95);
+
+            --text-primary: #2c2c2c;
+            --text-on-dark: #2c2c2c;
+            --text-on-dark-secondary: #444;
+            --text-label: #555;
+            --subtitle-gradient: linear-gradient(45deg, #333, #555);
+
+            --border-color: rgba(0, 0, 0, 0.1);
+            --card-border-color: rgba(0, 0, 0, 0.1);
+            --shadow-color-main: rgba(100, 100, 100, 0.15);
+            --shadow-color-accent: rgba(102, 126, 234, 0.2);
+        }
+        /* --- END THEME COLORS --- */
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
             min-height: 100vh;
-            padding: 20px;
+            overflow-x: hidden;
+            transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
         }
 
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            transition: opacity var(--transition-speed) ease;
         }
 
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        body.light-theme .bg-animation {
+            opacity: 0.2;
+        }
+        
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
         }
 
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 40px;
-            align-items: start;
+            padding: 0 20px;
         }
 
-        .controls {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .controls h2 {
-            margin-bottom: 25px;
-            color: #333;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e1e5e9;
-            border-radius: 12px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.8);
-        }
-
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-            background: white;
-        }
-
-        .upload-area {
-            border: 2px dashed #ccc;
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 15px;
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        .upload-area:hover {
-            border-color: #667eea;
-            background: rgba(102, 126, 234, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .upload-area.has-image {
-            border-color: #28a745;
-            background: rgba(40, 167, 69, 0.1);
-        }
-
-        .upload-preview {
-            max-width: 100px;
-            max-height: 100px;
-            border-radius: 8px;
-            margin-top: 10px;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 25px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            width: 100%;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .emulator-showcase {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .phone-frame {
-            position: relative;
-            width: 320px;
-            height: 640px;
-            background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
-            border-radius: 35px;
-            padding: 20px;
-            box-shadow: 
-                0 30px 60px rgba(0, 0, 0, 0.3),
-                inset 0 2px 0 rgba(255, 255, 255, 0.1),
-                inset 0 -2px 0 rgba(0, 0, 0, 0.2);
-            transition: all 0.4s ease;
-        }
-
-        .phone-frame:hover {
-            transform: translateY(-8px) rotateY(5deg);
-            box-shadow: 
-                0 40px 80px rgba(0, 0, 0, 0.4),
-                inset 0 2px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .phone-screen {
-            width: 100%;
-            height: 100%;
-            background: #000;
-            border-radius: 25px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .status-bar {
-            position: absolute;
+        /* Enhanced Header */
+        .header {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            height: 35px;
-            background: linear-gradient(90deg, #007bb6, #0066aa);
+            z-index: 100;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .header.scrolled {
+            background: var(--bg-nav-scrolled);
+            backdrop-filter: blur(30px);
+        }
+
+        .nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 15px;
-            z-index: 10;
-            font-size: 12px;
-            color: white;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-items-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-on-dark-secondary);
             font-weight: 500;
-        }
-
-        .screen-content {
-            width: 100%;
-            height: 100%;
+            transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
-            padding-top: 35px;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
         }
 
-        .app-container {
-            width: 300%;
-            height: 100%;
-            display: flex;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        body.light-theme .nav-links a {
+            color: #555;
+        }
+        body.light-theme .nav-links a:hover {
+            color: #111;
         }
 
-        .screen-slide {
-            width: 33.333%;
-            height: 100%;
+
+        .nav-links a:hover {
+            color: var(--text-on-dark);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 80%;
+        }
+
+        /* --- Theme Switcher Styles --- */
+        .theme-switcher {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-on-dark);
+        }
+        body.light-theme .theme-switcher {
+            color: var(--text-primary);
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #764ba2;
+            transition: .4s;
+            border-radius: 26px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: var(--accent-color);
+        }
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+        /* --- End Theme Switcher Styles --- */
+
+        /* Enhanced Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
             align-items: center;
             justify-content: center;
-            padding: 30px 20px;
             text-align: center;
+            color: var(--text-on-dark);
+            position: relative;
         }
 
-        .slide-1 { background: linear-gradient(135deg, #FF6B6B, #4ECDC4); }
-        .slide-2 { background: linear-gradient(135deg, #A8E6CF, #FFD93D); }
-        .slide-3 { background: linear-gradient(135deg, #B8860B, #FF69B4); }
-
-        .slide-image {
-            max-width: 200px;
-            max-height: 300px;
-            object-fit: contain;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        .hero-content {
+            z-index: 2;
+            position: relative;
         }
 
-        .slide-text {
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideInUp 1s ease-out 0.5s forwards;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideInUp 1s ease-out 0.7s forwards;
+            background: var(--subtitle-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .typing-text {
+            font-size: 1.2rem;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .typing-text .cursor {
+            display: inline-block;
+            background-color: var(--accent-color);
+            margin-left: 3px;
+            width: 3px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent-gradient);
             color: white;
-            font-size: 18px;
-            font-weight: 600;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            line-height: 1.4;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideInUp 1s ease-out 0.9s forwards;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px var(--shadow-color-accent);
         }
 
-        .navigation-dots {
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
             position: absolute;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            display: flex;
-            gap: 12px;
-            z-index: 10;
+            animation: bounce 2s infinite;
         }
 
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.4);
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .mouse {
+            width: 3px;
+            padding: 10px 15px;
+            height: 35px;
+            border: 2px solid var(--text-on-dark);
+            border-radius: 25px;
+            opacity: 0.75;
+            box-sizing: content-box;
         }
 
-        .dot.active {
-            background: white;
-            transform: scale(1.3);
-            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
+        .wheel {
+            height: 5px;
+            background: var(--text-on-dark);
+            border-radius: 25px;
+            animation: scroll 2s infinite;
+            margin: 5px auto;
         }
 
-        .app-info {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        @keyframes scroll {
+            0% { opacity: 0; }
+            10% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(15px); opacity: 0; }
+        }
+
+        /* Enhanced Main Content */
+        .main {
+            background: var(--bg-main-content);
+            backdrop-filter: blur(20px);
+            border-radius: 30px 30px 0 0;
+            box-shadow: 0 -20px 50px var(--shadow-color-main);
+            position: relative;
+            z-index: 1;
+            margin-top: -50px;
+            transition: background var(--transition-speed) ease;
+        }
+
+        .section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--text-primary);
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .section-title.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 4px;
+            background: var(--accent-gradient);
+            border-radius: 2px;
+            transition: width 0.8s ease 0.3s;
+        }
+
+        .section-title.animate::after {
+            width: 100px;
+        }
+
+        /* Enhanced Skills Section */
+        .skills-container {
+            position: relative;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
             border-radius: 20px;
-            padding: 25px;
-            max-width: 320px;
+            border: 1px solid var(--card-border-color);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .skill-category.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .skill-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            height: 4px;
+            background: var(--accent-gradient);
+            transition: left 0.5s ease;
         }
 
-        .app-info h3 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .skill-category:hover::before {
+            left: 0;
         }
 
-        .app-info p {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 15px;
+        .skill-category:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px var(--shadow-color-accent);
         }
 
-        .tech-tags {
+        .skill-category h3 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            text-align: center;
+        }
+
+        .skill-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 0.8rem;
+            justify-content: center;
         }
 
-        .tech-tag {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+        .skill-tag {
+            background: var(--accent-gradient);
             color: white;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
             font-weight: 500;
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-        }
-
-        .controls-section {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .control-btn {
-            flex: 1;
-            background: rgba(102, 126, 234, 0.1);
-            border: 1px solid rgba(102, 126, 234, 0.3);
-            color: #667eea;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
             transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
-        .control-btn:hover {
-            background: rgba(102, 126, 234, 0.2);
-            transform: translateY(-1px);
+        .skill-tag::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            transform: translate(-50%, -50%);
         }
 
-        .footer {
+        .skill-tag:hover::before {
+            width: 200px;
+            height: 200px;
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px var(--shadow-color-accent);
+        }
+
+        /* Animated Counter */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-item {
             text-align: center;
-            margin-top: 50px;
-            color: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            background: var(--bg-stat-item);
+            border-radius: 20px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            opacity: 0;
+            transform: scale(0.8);
         }
 
-        .footer a {
-            color: white;
-            text-decoration: none;
+        .stat-item.animate {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .stat-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px var(--shadow-color-accent);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-label);
+            font-weight: 500;
+        }
+
+        /* Enhanced Project Cards */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 25px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid var(--card-border-color);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px) rotateX(10deg);
+        }
+
+        .project-card.animate {
+            opacity: 1;
+            transform: translateY(0) rotateX(0deg);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: left;
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px var(--shadow-color-accent);
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            position: relative;
+        }
+        
+        .project-description {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--text-label);
+        }
+        
+        .project-stat-box {
+            background: var(--bg-stat-item);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .project-stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        
+        .project-stat-label {
+            color: var(--text-label);
+        }
+
+        .project-tech {
+            color: var(--accent-color);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
             font-weight: 600;
         }
 
-        .footer a:hover {
-            text-decoration: underline;
+        /* Achievement Cards */
+        .achievement-card {
+            background: var(--accent-gradient);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: rotateY(180deg);
         }
 
-        @media (max-width: 1024px) {
-            .container {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            
-            .phone-frame {
-                width: 280px;
-                height: 560px;
-            }
-            
-            .controls {
-                order: 2;
+        .achievement-card.animate {
+            opacity: 1;
+            transform: rotateY(0deg);
+        }
+
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: rotate 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .achievement-card:hover::before {
+            opacity: 1;
+        }
+
+        .achievement-card:hover {
+            transform: scale(1.05) rotateZ(2deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .achievement-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        /* Enhanced Contact Section */
+        .contact {
+            background: var(--bg-contact);
+            color: white;
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+            transition: background var(--transition-speed) ease;
+        }
+        
+        body.light-theme .contact {
+             color: var(--text-primary);
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: backgroundMove 20s linear infinite;
+        }
+
+        @keyframes backgroundMove {
+            from { transform: translate(0, 0); }
+            to { transform: translate(10px, 10px); }
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 2rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        
+        body.light-theme .contact-item {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: var(--text-primary);
+        }
+
+        .contact-item.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero .subtitle { font-size: 1.2rem; }
+            .nav-links, .theme-switcher { display: none; } /* Hide on mobile */
+            .skills-grid, .projects-grid { grid-template-columns: 1fr; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .contact-info { flex-direction: column; align-items: center; }
+        }
+
+        @keyframes slideInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        @media (max-width: 480px) {
-            .phone-frame {
-                width: 250px;
-                height: 500px;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
+        /* Loading screen */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
         }
 
-        .hidden {
-            display: none;
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-text {
+            font-size: 2rem;
+            font-weight: bold;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 1.5s ease-in-out infinite;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>📱 React Native Emulator</h1>
-        <p>Create stunning mobile app mockups for your portfolio</p>
+    <div class="loader" id="loader">
+        <div class="loader-text">Loading...</div>
     </div>
 
-    <div class="container">
-        <div class="controls">
-            <h2>🎨 Customize Your App</h2>
-            
-            <div class="form-group">
-                <label>📝 App Title</label>
-                <input type="text" id="appTitle" value="Horizontal Swiper App" placeholder="Enter your app name">
-            </div>
+    <div class="bg-animation"></div>
+    <div class="floating-particles" id="particles"></div>
 
-            <div class="form-group">
-                <label>📄 App Description</label>
-                <textarea id="appDescription" rows="3" placeholder="Describe your amazing app...">A beautiful React Native application with smooth horizontal scrolling and elegant transitions.</textarea>
-            </div>
-
-            <div class="form-group">
-                <label>🖼️ Screen 1 Image</label>
-                <div class="upload-area" id="upload1" onclick="document.getElementById('image1').click()">
-                    <div>📷 Upload First Screen</div>
-                    <small>PNG, JPG up to 5MB</small>
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Arjun D</div>
+            <div class="nav-items-right">
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#achievements">Achievements</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                 <div class="theme-switcher">
+                    <span>☀️</span>
+                    <label class="switch">
+                        <input type="checkbox" id="theme-toggle">
+                        <span class="slider"></span>
+                    </label>
+                    <span>🌙</span>
                 </div>
-                <input type="file" id="image1" class="hidden" accept="image/*">
-                <input type="text" id="text1" value="Welcome to the First Screen!" placeholder="Screen 1 text">
             </div>
+        </nav>
+    </header>
 
-            <div class="form-group">
-                <label>🖼️ Screen 2 Image</label>
-                <div class="upload-area" id="upload2" onclick="document.getElementById('image2').click()">
-                    <div>📷 Upload Second Screen</div>
-                    <small>PNG, JPG up to 5MB</small>
-                </div>
-                <input type="file" id="image2" class="hidden" accept="image/*">
-                <input type="text" id="text2" value="This is the Second Screen!" placeholder="Screen 2 text">
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Arjun D</h1>
+            <p class="subtitle">AI Developer & Software Engineer</p>
+            <div class="typing-text" id="typing-text">
+                <span id="typed-text"></span>
+                <span class="cursor" id="typing-cursor">|</span>
             </div>
-
-            <div class="form-group">
-                <label>🖼️ Screen 3 Image</label>
-                <div class="upload-area" id="upload3" onclick="document.getElementById('image3').click()">
-                    <div>📷 Upload Third Screen</div>
-                    <small>PNG, JPG up to 5MB</small>
-                </div>
-                <input type="file" id="image3" class="hidden" accept="image/*">
-                <input type="text" id="text3" value="And here's the Third Screen!" placeholder="Screen 3 text">
-            </div>
-
-            <div class="form-group">
-                <label>⚡ Tech Stack (comma-separated)</label>
-                <input type="text" id="techStack" value="React Native, Expo, JavaScript, TypeScript" placeholder="React Native, Firebase, etc.">
-            </div>
-
-            <button class="btn" onclick="downloadImage()">📥 Download Mockup</button>
-            <button class="btn" onclick="resetAll()">🔄 Reset Everything</button>
+            <a href="#contact" class="cta-button">Let's Collaborate</a>
         </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+        </div>
+    </section>
 
-        <div class="emulator-showcase">
-            <div class="phone-frame" id="phoneFrame">
-                <div class="phone-screen">
-                    <div class="status-bar">
-                        <span>9:41</span>
-                        <span>📶 WiFi 🔋</span>
-                    </div>
-                    
-                    <div class="screen-content">
-                        <div class="app-container" id="appContainer">
-                            <div class="screen-slide slide-1">
-                                <div id="content1">
-                                    <div class="slide-text">Welcome to the First Screen!</div>
-                                </div>
-                            </div>
-                            <div class="screen-slide slide-2">
-                                <div id="content2">
-                                    <div class="slide-text">This is the Second Screen!</div>
-                                </div>
-                            </div>
-                            <div class="screen-slide slide-3">
-                                <div id="content3">
-                                    <div class="slide-text">And here's the Third Screen!</div>
-                                </div>
-                            </div>
+    <main class="main">
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <p style="font-size: 1.2rem; text-align: center; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto; color: var(--text-label);">
+                        I'm a passionate B.Tech student in AI & Data Science, currently excelling with a CGPA of 8.74. 
+                        As a Flutter Developer at FixinGuru Singapore, I've architected applications serving multiple Southeast Asian markets, 
+                        combining my love for intelligent systems with real-world impact.
+                    </p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="250">0</span>
+                            <div class="stat-label">LeetCode Problems</div>
                         </div>
-                        
-                        <div class="navigation-dots">
-                            <div class="dot active" onclick="showSlide(0)"></div>
-                            <div class="dot" onclick="showSlide(1)"></div>
-                            <div class="dot" onclick="showSlide(2)"></div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="95">0</span>
+                            <div class="stat-label">CV Accuracy %</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="4">0</span>
+                            <div class="stat-label">Markets Served</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="99.9">0</span>
+                            <div class="stat-label">Uptime %</div>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="app-info">
-                <h3 id="infoTitle">📱 Horizontal Swiper App</h3>
-                <p id="infoDescription">A beautiful React Native application with smooth horizontal scrolling and elegant transitions.</p>
-                <div class="tech-tags" id="techTags">
-                    <span class="tech-tag">React Native</span>
-                    <span class="tech-tag">Expo</span>
-                    <span class="tech-tag">JavaScript</span>
-                    <span class="tech-tag">TypeScript</span>
+        <section id="skills" class="section">
+            <div class="container">
+                <h2 class="section-title">Technical Arsenal</h2>
+                <div class="skills-container">
+                    <div class="skills-grid">
+                         <div class="skill-category" data-delay="0">
+                            <h3>⚡ Programming</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Java</span>
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">Dart</span>
+                                <span class="skill-tag">C</span>
+                            </div>
+                        </div>
+                        <div class="skill-category" data-delay="100">
+                            <h3>📱 Mobile Development</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Flutter</span>
+                                <span class="skill-tag">Firebase</span>
+                                <span class="skill-tag">Android Studio</span>
+                            </div>
+                        </div>
+                        <div class="skill-category" data-delay="200">
+                            <h3>☁️ Backend & Cloud</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Node.js</span>
+                                <span class="skill-tag">RESTful APIs</span>
+                                <span class="skill-tag">Google Cloud</span>
+                                <span class="skill-tag">Docker</span>
+                                <span class="skill-tag">Kubernetes</span>
+                            </div>
+                        </div>
+                        <div class="skill-category" data-delay="300">
+                            <h3>🤖 AI/ML & Vision</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">OpenCV</span>
+                                <span class="skill-tag">Computer Vision</span>
+                                <span class="skill-tag">Speech Recognition</span>
+                                <span class="skill-tag">Gemini API</span>
+                            </div>
+                        </div>
+                        <div class="skill-category" data-delay="400">
+                            <h3>🗄️ Databases</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Firestore</span>
+                                <span class="skill-tag">Oracle DB</span>
+                                <span class="skill-tag">SQL/NoSQL</span>
+                                <span class="skill-tag">Analytics</span>
+                            </div>
+                        </div>
+                        <div class="skill-category" data-delay="500">
+                            <h3>🛠️ Tools & Methods</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Git</span>
+                                <span class="skill-tag">GitHub</span>
+                                <span class="skill-tag">VS Code</span>
+                                <span class="skill-tag">Agile/Scrum</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="controls-section">
-                    <button class="control-btn" onclick="showSlide((currentSlide - 1 + 3) % 3)">← Prev</button>
-                    <button class="control-btn" onclick="showSlide((currentSlide + 1) % 3)">Next →</button>
+            </div>
+        </section>
+
+        <section id="experience" class="section">
+            <div class="container">
+                <h2 class="section-title">Professional Journey</h2>
+                </div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="container">
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card" data-delay="0">
+                        <h3 class="project-title">🤖 Jarvis - AI Vision Platform</h3>
+                        <p class="project-tech">Python • OpenCV • ML • Speech Recognition</p>
+                        <p class="project-description">
+                            Advanced real-time computer vision system with 95% person identification accuracy and voice command integration.
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; font-size: 0.9rem;">
+                            <div class="project-stat-box">
+                                <div class="project-stat-number">95%</div>
+                                <div class="project-stat-label">ID Accuracy</div>
+                            </div>
+                            <div class="project-stat-box">
+                                <div class="project-stat-number">30FPS</div>
+                                <div class="project-stat-label">Video Stream</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-delay="200">
+                         <h3 class="project-title">🏦 Advanced Banking System</h3>
+                        <p class="project-tech">Java • JWT Auth • ACID Compliance</p>
+                        <p class="project-description">
+                           Secure enterprise banking platform with 99.5% transaction success and multi-tier authentication.
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; font-size: 0.9rem;">
+                            <div class="project-stat-box">
+                                <div class="project-stat-number">99.5%</div>
+                                <div class="project-stat-label">Success Rate</div>
+                            </div>
+                            <div class="project-stat-box">
+                                <div class="project-stat-number">95%</div>
+                                <div class="project-stat-label">Security Boost</div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="project-card" data-delay="400">
+                        <h3 class="project-title">📚 StudyPy Learning App</h3>
+                        <p class="project-tech">Flutter • Python Interpreter • Backend</p>
+                        <p class="project-description">
+                            Educational platform for Python learning with custom interpreter and real-time teacher monitoring.
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; font-size: 0.9rem;">
+                           <div class="project-stat-box">
+                                <div class="project-stat-number">Real-time</div>
+                                <div class="project-stat-label">Code Execution</div>
+                            </div>
+                            <div class="project-stat-box">
+                                <div class="project-stat-number">Live</div>
+                                <div class="project-stat-label">Progress Tracking</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="achievements" class="section">
+            <div class="container">
+                <h2 class="section-title">Achievements & Recognition</h2>
+                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                    <div class="achievement-card" data-delay="0">
+                        <div class="achievement-icon">🏆</div>
+                        <h3 style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">1st Place - Dev Wars</h3>
+                        <p style="opacity: 0.9; font-size: 0.95rem;">JIGYASA 2025 National Tech Symposium (200+ participants)</p>
+                    </div>
+                    <div class="achievement-card" data-delay="100">
+                        <div class="achievement-icon">🥈</div>
+                        <h3 style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">2nd Place - CodeWare</h3>
+                        <p style="opacity: 0.9; font-size: 0.95rem;">Programming Contest at Puducherry Tech University</p>
+                    </div>
+                    <div class="achievement-card" data-delay="200">
+                        <div class="achievement-icon">⭐</div>
+                        <h3 style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">5-Star CodeChef</h3>
+                        <p style="opacity: 0.9; font-size: 0.95rem;">Rating: 1127, Top 20% globally</p>
+                    </div>
+                 </div>
+            </div>
+        </section>
+    </main>
+
+    <section id="contact" class="contact">
+        <div class="container" style="position: relative; z-index: 1;">
+            <h2 class="section-title" style="color: inherit;">Let's Build Something Amazing</h2>
+            <p style="font-size: 1.3rem; margin-bottom: 3rem; text-align: center; opacity: 0.9;">
+                Ready to collaborate on innovative projects or discuss opportunities
+            </p>
+            <div class="contact-info">
+                <div class="contact-item" data-delay="0">
+                    <span style="font-size: 1.5rem;">📍</span>
+                    <span>Dharmapuri, Puducherry, India</span>
+                </div>
+                <div class="contact-item" data-delay="100">
+                    <span style="font-size: 1.5rem;">💼</span>
+                    <span>Open for Opportunities</span>
+                </div>
+                <div class="contact-item" data-delay="200">
+                    <span style="font-size: 1.5rem;">🚀</span>
+                    <span>Available for Remote Work</span>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="footer">
-        <p>Created with ❤️ by <a href="https://github.com/ArjunJr05" target="_blank">Arjun D</a></p>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
-        let currentSlide = 0;
-        const slideImages = [null, null, null];
+        document.addEventListener('DOMContentLoaded', () => {
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            setupEventListeners();
-            updateTechTags();
-            startAutoSlide();
-        });
+            // --- THEME SWITCHER LOGIC ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
 
-        function setupEventListeners() {
-            // Image upload handlers
-            for (let i = 1; i <= 3; i++) {
-                document.getElementById(`image${i}`).addEventListener('change', (e) => handleImageUpload(e, i - 1));
-                document.getElementById(`text${i}`).addEventListener('input', (e) => updateSlideText(i - 1, e.target.value));
-            }
-
-            // App info handlers
-            document.getElementById('appTitle').addEventListener('input', (e) => {
-                document.getElementById('infoTitle').textContent = `📱 ${e.target.value}`;
-            });
-
-            document.getElementById('appDescription').addEventListener('input', (e) => {
-                document.getElementById('infoDescription').textContent = e.target.value;
-            });
-
-            document.getElementById('techStack').addEventListener('input', updateTechTags);
-        }
-
-        function handleImageUpload(event, slideIndex) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            if (file.size > 5 * 1024 * 1024) {
-                alert('File size should be less than 5MB');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                slideImages[slideIndex] = e.target.result;
-                updateSlideContent(slideIndex);
-                updateUploadArea(slideIndex + 1, true);
+            // Function to apply the saved theme
+            const applyTheme = (theme) => {
+                if (theme === 'light') {
+                    body.classList.add('light-theme');
+                    themeToggle.checked = true;
+                } else {
+                    body.classList.remove('light-theme');
+                    themeToggle.checked = false;
+                }
             };
-            reader.readAsDataURL(file);
-        }
 
-        function updateSlideContent(slideIndex) {
-            const content = document.getElementById(`content${slideIndex + 1}`);
-            const text = document.getElementById(`text${slideIndex + 1}`).value;
+            // Check for saved theme in localStorage
+            const savedTheme = localStorage.getItem('theme') || 'dark'; // Default to dark
+            applyTheme(savedTheme);
 
-            if (slideImages[slideIndex]) {
-                content.innerHTML = `
-                    <img src="${slideImages[slideIndex]}" class="slide-image" alt="Screen ${slideIndex + 1}">
-                    <div class="slide-text">${text}</div>
-                `;
-            } else {
-                content.innerHTML = `<div class="slide-text">${text}</div>`;
-            }
-        }
-
-        function updateSlideText(slideIndex, text) {
-            updateSlideContent(slideIndex);
-        }
-
-        function updateUploadArea(slideNumber, hasImage) {
-            const uploadArea = document.getElementById(`upload${slideNumber}`);
-            if (hasImage) {
-                uploadArea.classList.add('has-image');
-                uploadArea.innerHTML = `
-                    <div>✅ Image Uploaded</div>
-                    <small>Click to change</small>
-                `;
-            }
-        }
-
-        function updateTechTags() {
-            const techStack = document.getElementById('techStack').value;
-            const techTags = document.getElementById('techTags');
-            
-            const tags = techStack.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
-            techTags.innerHTML = tags.map(tag => `<span class="tech-tag">${tag}</span>`).join('');
-        }
-
-        function showSlide(slideIndex) {
-            currentSlide = slideIndex;
-            const container = document.getElementById('appContainer');
-            container.style.transform = `translateX(-${slideIndex * 33.333}%)`;
-
-            // Update dots
-            document.querySelectorAll('.dot').forEach((dot, index) => {
-                dot.classList.toggle('active', index === slideIndex);
+            // Event listener for the toggle switch
+            themeToggle.addEventListener('change', () => {
+                const newTheme = themeToggle.checked ? 'light' : 'dark';
+                applyTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
             });
-        }
+            // --- END THEME LOGIC ---
 
-        function startAutoSlide() {
-            setInterval(() => {
-                showSlide((currentSlide + 1) % 3);
-            }, 4000);
-        }
 
-        function downloadImage() {
-            const element = document.getElementById('phoneFrame');
-            const button = event.target;
-            
-            button.textContent = '⏳ Generating...';
-            button.disabled = true;
-
-            html2canvas(element, {
-                scale: 2,
-                backgroundColor: null,
-                useCORS: true,
-                allowTaint: true,
-                width: element.offsetWidth,
-                height: element.offsetHeight
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = `${document.getElementById('appTitle').value.replace(/\s+/g, '-').toLowerCase()}-mockup.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-                
-                button.textContent = '📥 Download Mockup';
-                button.disabled = false;
-            }).catch(err => {
-                console.error('Error generating image:', err);
-                button.textContent = '❌ Error - Try Again';
-                button.disabled = false;
-                
+            // Loading screen
+            window.addEventListener('load', () => {
                 setTimeout(() => {
-                    button.textContent = '📥 Download Mockup';
-                }, 2000);
+                    document.getElementById('loader').classList.add('hidden');
+                }, 500); // Reduced delay for faster loading feel
             });
-        }
 
-        function resetAll() {
-            if (confirm('Are you sure you want to reset everything?')) {
-                // Reset form values
-                document.getElementById('appTitle').value = 'Horizontal Swiper App';
-                document.getElementById('appDescription').value = 'A beautiful React Native application with smooth horizontal scrolling and elegant transitions.';
-                document.getElementById('techStack').value = 'React Native, Expo, JavaScript, TypeScript';
-                
-                for (let i = 1; i <= 3; i++) {
-                    document.getElementById(`image${i}`).value = '';
-                    document.getElementById(`text${i}`).value = `Welcome to Screen ${i}!`;
-                    slideImages[i - 1] = null;
-                    
-                    const uploadArea = document.getElementById(`upload${i}`);
-                    uploadArea.classList.remove('has-image');
-                    uploadArea.innerHTML = `
-                        <div>📷 Upload Screen ${i}</div>
-                        <small>PNG, JPG up to 5MB</small>
-                    `;
-                }
-                
-                // Reset display
-                document.getElementById('infoTitle').textContent = '📱 Horizontal Swiper App';
-                document.getElementById('infoDescription').textContent = 'A beautiful React Native application with smooth horizontal scrolling and elegant transitions.';
-                updateTechTags();
-                
-                // Reset slides
-                for (let i = 0; i < 3; i++) {
-                    updateSlideContent(i);
-                }
-                
-                showSlide(0);
+            // Floating particles
+            function createParticle() {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 5 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                document.getElementById('particles').appendChild(particle);
+
+                setTimeout(() => {
+                    particle.remove();
+                }, 7000); // Match animation duration
             }
-        }
+            setInterval(createParticle, 300);
+
+            // Typing animation
+            const phrases = [
+                "Building intelligent systems",
+                "Creating scalable applications",
+                "Solving complex problems",
+                "Innovating with AI/ML",
+                "Developing mobile solutions"
+            ];
+            
+            let phraseIndex = 0;
+            let letterIndex = 0;
+            let currentPhrase = '';
+            let isDeleting = false;
+            const typedTextElement = document.getElementById('typed-text');
+
+            function typeEffect() {
+                if (!typedTextElement) return;
+                
+                if (isDeleting) {
+                    currentPhrase = phrases[phraseIndex].substring(0, letterIndex - 1);
+                    letterIndex--;
+                } else {
+                    currentPhrase = phrases[phraseIndex].substring(0, letterIndex + 1);
+                    letterIndex++;
+                }
+
+                typedTextElement.textContent = currentPhrase;
+
+                let typeSpeed = 100;
+                if (isDeleting) typeSpeed /= 2;
+
+                if (!isDeleting && letterIndex === phrases[phraseIndex].length) {
+                    typeSpeed = 2000;
+                    isDeleting = true;
+                } else if (isDeleting && letterIndex === 0) {
+                    isDeleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                    typeSpeed = 500;
+                }
+
+                setTimeout(typeEffect, typeSpeed);
+            }
+            setTimeout(typeEffect, 1500);
+
+            // Smooth scrolling and header changes
+            const header = document.getElementById('header');
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const delay = target.dataset.delay || 0;
+                        
+                        setTimeout(() => {
+                            target.classList.add('animate');
+                        }, delay);
+
+                        // Animate counters if it's a stat-item
+                        if (target.classList.contains('stat-item')) {
+                            const counter = target.querySelector('.stat-number');
+                            if (!counter.hasAttribute('data-animated')) {
+                                animateCounter(counter);
+                                counter.setAttribute('data-animated', 'true');
+                            }
+                        }
+                        
+                        observer.unobserve(target); // Stop observing after animation
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements
+            document.querySelectorAll('.section-title, .stat-item, .skill-category, .project-card, .achievement-card, .contact-item').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Counter animation
+            function animateCounter(element) {
+                const target = parseFloat(element.dataset.target);
+                const duration = 2000;
+                let start = 0;
+                const stepTime = 16; // approx 60fps
+                const totalSteps = duration / stepTime;
+                const increment = target / totalSteps;
+
+                const update = () => {
+                    start += increment;
+                    if (start >= target) {
+                        element.textContent = target.toLocaleString();
+                    } else {
+                        element.textContent = Math.floor(start).toLocaleString();
+                        requestAnimationFrame(update);
+                    }
+                };
+                update();
+            }
+        });
     </script>
 </body>
 </html>
